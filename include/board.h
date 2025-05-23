@@ -27,6 +27,12 @@ class Board {
       return m_width * m_height;
     }
 
+    void insert_at(int x, int y);
+
+    std::vector<std::vector<char>> get_board() const {
+      return m_board;
+    }
+
     void update_frame() const; 
 };
 

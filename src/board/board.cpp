@@ -11,6 +11,14 @@ Board::Board(int width, int height):
 {
 }
 
+void Board::insert_at(int x, int y) {
+  if (y < 0 || y >= m_height || x < 0 || x >= m_width) {
+    throw std::out_of_range("Board access out of bounds");
+  }
+
+  m_board[y][x] = '#';
+}
+
 // Renders the board with latest snake position.
 void Board::update_frame() const {
   for (const auto& row : m_board) {
