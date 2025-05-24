@@ -5,7 +5,7 @@
 int main() {
   Board board {20, 60};
   Snake snake;
-  snake.spawn(10, 30, board);
+  snake.spawn(18, 30, board);
   
   snake.append(board);
   snake.append(board);

@@ -36,18 +36,20 @@ void Snake::append(Board& board) {
     char cell_right = board.get_board()[tail_y_pos][tail_x_pos + 1];
     
     // Render node at first unoccupied cell found.
-    if (cell_up == safe_cell) {
-      x_pos = tail_x_pos;
-      y_pos = tail_y_pos - 1;
-    } else if (cell_down == safe_cell) {
+    // Checks in order of down, right, left, up.
+    //  BUG: Seems to error when looking off the edge of the board.
+    if (cell_down == safe_cell) {
       x_pos = tail_x_pos;
       y_pos = tail_y_pos + 1;
     } else if (cell_right == safe_cell) {
       x_pos = tail_x_pos + 1;
       y_pos = tail_y_pos;
-    } else {
+    } else if (cell_left == safe_cell) {
       x_pos = tail_x_pos - 1;
       y_pos = tail_y_pos;
+    } else {
+      x_pos = tail_x_pos;
+      y_pos = tail_y_pos - 1;
     }
 
     SnakeNode* new_node = new SnakeNode(y_pos, x_pos);
