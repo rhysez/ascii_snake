@@ -22,6 +22,7 @@ class Snake {
   public:
     Snake();
     
+    void spawn(int row, int col, Board& board);
     void append(int row, int col, Board& board); 
 
     SnakeNode* get_head() const {

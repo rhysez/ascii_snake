@@ -8,9 +8,7 @@ int main() {
   // Example of appending a node.
   Snake snake;
 
-  snake.append(30, 10, board);
-  snake.append(30, 11, board);
-  snake.append(30, 12, board);
-
+  snake.spawn(30, 10, board);
+  
   board.update_frame();
 }
