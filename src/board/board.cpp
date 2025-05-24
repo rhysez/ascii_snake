@@ -1,6 +1,7 @@
 #include "board.h"
 #include <iostream>
 #include <vector>
+#include <ncurses.h>
 
 // Represents the game board.
 // m_board is initialised with a 2D vector of chars.

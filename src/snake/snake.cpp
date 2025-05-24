@@ -39,7 +39,6 @@ void Snake::append(Board& board) {
     
     // Render node at first unoccupied cell found.
     // Checks in order of down, right, left, up.
-    //  BUG: Seems to error when looking off the edge of the board.
     if (cell_down == safe_cell) {
       x_pos = tail_x_pos;
       y_pos = tail_y_pos + 1;
