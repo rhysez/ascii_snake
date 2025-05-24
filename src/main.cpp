@@ -3,12 +3,12 @@
 #include "snake.h"
 
 int main() {
-  Board board {60, 20};
-
-  // Example of appending a node.
+  Board board {20, 60};
   Snake snake;
-
-  snake.spawn(30, 10, board);
+  snake.spawn(10, 30, board);
   
-  board.update_frame();
+  snake.append(board);
+  snake.append(board);
+  snake.append(board);
+  snake.append(board);
 }

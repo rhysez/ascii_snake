@@ -4,14 +4,14 @@
 
 class SnakeNode {
   private:
-    int m_prev_node_row_index;
-    int m_prev_node_col_index;
+    int m_prev_node_y_index;
+    int m_prev_node_x_index;
 
-    int m_row_index;
-    int m_col_index;
+    int m_y_index;
+    int m_x_index;
 
   public:
-    SnakeNode(int row, int col);
+    SnakeNode(int y_pos, int x_pos);
 
     SnakeNode* next;
     SnakeNode* prev;
@@ -24,12 +24,12 @@ class SnakeNode {
       prev = node;
     }
 
-    int get_row_index() const {
-      return m_row_index;
+    int get_y_index() const {
+      return m_y_index;
     }
 
-    int get_col_index() const {
-      return m_col_index;
+    int get_x_index() const {
+      return m_x_index;
     }
 
     void move();
