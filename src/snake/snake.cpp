@@ -30,10 +30,12 @@ void Snake::append(Board& board) {
 
     // Surrounding cells.
     // Used for checking where the node can be safely appended.
-    char cell_up = board.get_board()[tail_y_pos - 1][tail_x_pos];
-    char cell_down = board.get_board()[tail_y_pos + 1][tail_x_pos];
-    char cell_left = board.get_board()[tail_y_pos][tail_x_pos - 1];
-    char cell_right = board.get_board()[tail_y_pos][tail_x_pos + 1];
+    // If the cell is an invalid byte in memory, replace with null termination character.
+    // The null termination character is being used to signify that the cell isn't safe to access.
+    char cell_up    = (tail_y_pos > 0) ? board.get_board()[tail_y_pos - 1][tail_x_pos] : '\0';
+    char cell_down  = (tail_y_pos < board.get_height() - 1) ? board.get_board()[tail_y_pos + 1][tail_x_pos] : '\0';
+    char cell_left  = (tail_x_pos > 0) ? board.get_board()[tail_y_pos][tail_x_pos - 1] : '\0';
+    char cell_right = (tail_x_pos < board.get_width() - 1) ? board.get_board()[tail_y_pos][tail_x_pos + 1] : '\0';
     
     // Render node at first unoccupied cell found.
     // Checks in order of down, right, left, up.

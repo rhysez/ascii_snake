@@ -11,4 +11,14 @@ int main() {
   snake.append(board);
   snake.append(board);
   snake.append(board);
+  snake.append(board);
+  snake.append(board);
+  snake.append(board);
+  snake.append(board);
+  snake.append(board);
+  snake.append(board);
+  snake.append(board);
+  snake.append(board);
+  snake.append(board);
+  snake.append(board);
 }
