@@ -11,9 +11,18 @@ class Board {
     int m_height;
     int m_width;
     std::vector<std::vector<char>> m_board;
+    int m_score;
 
   public:
     Board(int height, int width);
+
+    int get_score() {
+      return m_score;
+    }
+
+    void increment_score() {
+      m_score += 1;
+    }
 
     int get_width() const {
       return m_width;

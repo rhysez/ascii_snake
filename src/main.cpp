@@ -48,13 +48,19 @@ int kbhit() {
 }
 
 // TODO: This should also handle eating a fruit when incoming_cell is a fruit.
-void assess_incoming_cell(Board* board, int y, int x) {
+int assess_incoming_cell(Board* board, int y, int x) {
+  if (y < 0 || y >= board->get_height() || x < 0 || x >= board->get_width()) {
+    return 1;
+  }
+
   char incoming_cell = board->get_board()[y][x];
   if (incoming_cell == '#') {
     std::cout << "You collided with your own body! GAME OVER." << "\n";
     setNonCanonicalMode(false);
-    std::exit(0);  
+    std::exit(0);
+    return 2;
   }
+  return 0;
 }
 
 // Responsible for running the game and executing moves.
@@ -65,23 +71,33 @@ int run_session(Snake* snake, Board* board) {
             SnakeNode* head = snake->get_head();
             int head_y_pos = head->get_y_index();
             int head_x_pos = head->get_x_index();
+
+            int result;
             
             switch (ch) {
               case 'a':
-                assess_incoming_cell(board, head_y_pos, head_x_pos - 1);
-                snake->move(head_y_pos, head_x_pos - 1, board);
+                result = assess_incoming_cell(board, head_y_pos, head_x_pos - 1);
+                if (result == 0) {
+                  snake->move(head_y_pos, head_x_pos - 1, board);
+                }
                 return 0;
               case 'd':
-                assess_incoming_cell(board, head_y_pos, head_x_pos + 1);
-                snake->move(head_y_pos, head_x_pos + 1, board);
+                result = assess_incoming_cell(board, head_y_pos, head_x_pos + 1);
+                if (result == 0) {
+                  snake->move(head_y_pos, head_x_pos + 1, board);
+                }
                 return 0;
               case 'w':
-                assess_incoming_cell(board, head_y_pos - 1, head_x_pos);
-                snake->move(head_y_pos - 1, head_x_pos, board);
+                result = assess_incoming_cell(board, head_y_pos - 1, head_x_pos);
+                if (result == 0) {
+                  snake->move(head_y_pos - 1, head_x_pos, board);
+                } 
                 return 0;
               case 's':
-                assess_incoming_cell(board, head_y_pos + 1, head_x_pos);
-                snake->move(head_y_pos + 1, head_x_pos, board);
+                result = assess_incoming_cell(board, head_y_pos + 1, head_x_pos);
+                if (result == 0) {
+                  snake->move(head_y_pos + 1, head_x_pos, board);
+                }
                 return 0;
               default:
                 std::cout << "No binding available for this key" << "\n";

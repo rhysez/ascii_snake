@@ -1,30 +1,23 @@
 #include "board.h"
 #include <iostream>
 #include <vector>
-#include <ncurses.h>
+#include <string>
 
 // Represents the game board.
 // m_board is initialised with a 2D vector of chars.
 Board::Board(int height, int width):
   m_height(height),
   m_width(width),
-  m_board(height, std::vector<char>(width, '~'))
+  m_board(height, std::vector<char>(width, '~')),
+  m_score(0)
 {
 }
 
 void Board::insert_at(int y, int x) {
-  if (y < 0 || y >= m_height || x < 0 || x >= m_width) {
-    throw std::out_of_range("Board access out of bounds");
-  }
-
   m_board[y][x] = '#';
 }
 
 void Board::delete_at(int y, int x) {
-  if (y < 0 || y >= m_height || x < 0 || x >= m_width) {
-    throw std::out_of_range("Board access out of bounds");
-  }
-
   m_board[y][x] = '~';
 }
 
@@ -40,4 +33,5 @@ void Board::update_frame() const {
   }
   
   std::cout << "\n";
+  std::cout << "Score: " << std::to_string(m_score) << "\n";
 }
