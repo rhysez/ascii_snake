@@ -47,38 +47,56 @@ int kbhit() {
     return 0;
 }
 
+int start_game_runtime(Snake* snake, Board* board) {
+    while (true) {
+        if (kbhit()) {
+            char ch = getchar();
+            SnakeNode* head = snake->get_head();
+            int head_y_pos = head->get_y_index();
+            int head_x_pos = head->get_x_index();
+
+            switch (ch) {
+              case 'a':
+                snake->move(head_y_pos, head_x_pos - 1, board);
+                return 0;
+              case 'd':
+                snake->move(head_y_pos, head_x_pos + 1, board);
+                return 0;
+              case 'w':
+                snake->move(head_y_pos - 1, head_x_pos, board);
+                return 0;
+              case 's':
+                snake->move(head_y_pos + 1, head_x_pos, board);
+                return 0;
+              default:
+                std::cout << "No binding available for this key" << "\n";
+                return 1;
+            }
+        }
+    }
+}
+
 int main() {
     setNonCanonicalMode(true);
 
     Board board {20, 60};
     Snake snake;
 
-    // Pointer to the board.
-    // Allows Snake methods to access Board.
+    // Pointers to the board and snake.
     Board* p_board = &board;
+    Snake* p_snake = &snake;
 
-    snake.spawn(18, 30, p_board);
+    p_snake->spawn(18, 30, p_board);
     
     // Build the initial snake.
     for (int i = 0; i < 5; i++) {
-      snake.append(p_board);
+      p_snake->append(p_board);
     } 
 
     while (true) {
-        if (kbhit()) {
-            char ch = getchar();
-            SnakeNode* head = snake.get_head();
-            int head_y_pos = head->get_y_index();
-            int head_x_pos = head->get_x_index();
-
-            snake.move(
-                head_y_pos,
-                head_x_pos - 1,
-                p_board
-                );
-        }
-    }
-
+      start_game_runtime(p_snake, p_board);
+    } 
+    
     setNonCanonicalMode(false);
     return 0;
 }
