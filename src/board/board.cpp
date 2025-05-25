@@ -30,7 +30,15 @@ void Board::spawn_fruit() {
   std::uniform_int_distribution<> y_distr(0, m_board.size() - 1);
   std::uniform_int_distribution<> x_distr(0, m_board[0].size() - 1);
 
-  m_board[y_distr(gen)][x_distr(gen)] = 'O';
+  while (true) {
+    int y = y_distr(gen);
+    int x = x_distr(gen);
+
+    if (m_board[y][x] != '#') {
+      m_board[y][x] = 'O';
+      break;
+    }
+  }
 }
 
 // Renders the board with latest snake position.
