@@ -22,8 +22,8 @@ class Snake {
   public:
     Snake();
     
-    void spawn(int y_pos, int x_pos, Board& board);
-    void append(Board& board); 
+    void spawn(int y_pos, int x_pos, Board* board);
+    void append(Board* board); 
 
     SnakeNode* get_head() const {
       return m_head;

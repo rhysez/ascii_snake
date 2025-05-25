@@ -49,14 +49,20 @@ int kbhit() {
 
 int main() {
     setNonCanonicalMode(true);
+
     Board board {20, 60};
     Snake snake;
-    snake.spawn(18, 30, board);
+
+    // Pointer to the board.
+    // Allows Snake methods to access Board from within members.
+    Board* p_board = &board;
+
+    snake.spawn(18, 30, p_board);
 
     while (true) {
         if (kbhit()) {
             char ch = getchar();
-            snake.append(board);
+            snake.append(p_board);
         }
     }
 
