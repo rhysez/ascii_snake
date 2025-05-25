@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(snake_from_scratch)
+project(pure_ascii_snake)
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(include)
 
 add_executable(
-  snake_from_scratch src/main.cpp
+  pure_ascii_snake src/main.cpp
   include/board.h
   include/snake.h
   include/snake_node.h
