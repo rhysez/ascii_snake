@@ -8,3 +8,6 @@ I wanted to build snake in its most primitive form - in the terminal using only 
 
 ### Vectors, Linked Lists and Linear Search
 The game is comprised of three main systems - vectors, linked lists, and a linear search algorithm to navigate lists. 
+
+### Minimal abstractions - why?
+I wanted to build the game with as little help from libraries as possible. This approach forced me to get into the weeds of fundamental C++ concepts. 
