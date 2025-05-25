@@ -85,7 +85,6 @@ void Snake::append(Board* board) {
 
 // Moves the snake towards the targeted position on the board.
 // Recursively moves each individual node in the list.
-//  BUG: Moving snake deletes all previous nodes to the head.
 void Snake::move(int new_y_pos, int new_x_pos, Board* board) {
   SnakeNode* current = m_head;
 

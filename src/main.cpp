@@ -54,18 +54,46 @@ int start_game_runtime(Snake* snake, Board* board) {
             SnakeNode* head = snake->get_head();
             int head_y_pos = head->get_y_index();
             int head_x_pos = head->get_x_index();
-
+            char incoming_cell;
+            
+            // TODO: Too much duplicated logic. Should encapsulate in function.
             switch (ch) {
               case 'a':
+                incoming_cell = board->get_board()[head_y_pos][head_x_pos - 1];
+                if (incoming_cell == '#') {
+                  std::cout << "You collided with your own body! GAME OVER." << "\n";
+                  setNonCanonicalMode(false);
+                  std::exit(0);
+                }
+
                 snake->move(head_y_pos, head_x_pos - 1, board);
                 return 0;
               case 'd':
+                incoming_cell = board->get_board()[head_y_pos][head_x_pos + 1];
+                if (incoming_cell == '#') {
+                  std::cout << "You collided with your own body! GAME OVER." << "\n";
+                  setNonCanonicalMode(false);
+                  std::exit(0);
+                }
+
                 snake->move(head_y_pos, head_x_pos + 1, board);
                 return 0;
               case 'w':
+                incoming_cell = board->get_board()[head_y_pos - 1][head_x_pos];
+                if (incoming_cell == '#') {
+                  std::cout << "You collided with your own body! GAME OVER." << "\n";
+                  setNonCanonicalMode(false);
+                  std::exit(0);
+                }
                 snake->move(head_y_pos - 1, head_x_pos, board);
                 return 0;
               case 's':
+                incoming_cell = board->get_board()[head_y_pos + 1][head_x_pos];
+                if (incoming_cell == '#') {
+                  std::cout << "You collided with your own body! GAME OVER." << "\n";
+                  setNonCanonicalMode(false);
+                  std::exit(0);
+                }
                 snake->move(head_y_pos + 1, head_x_pos, board);
                 return 0;
               default:
