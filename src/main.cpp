@@ -47,53 +47,39 @@ int kbhit() {
     return 0;
 }
 
-int start_game_runtime(Snake* snake, Board* board) {
+void assess_incoming_cell(Board* board, int y, int x) {
+  char incoming_cell = board->get_board()[y][x];
+  if (incoming_cell == '#') {
+    std::cout << "You collided with your own body! GAME OVER." << "\n";
+    setNonCanonicalMode(false);
+    std::exit(0);  
+  }
+}
+
+// Responsible for running the game and executing moves.
+int run_session(Snake* snake, Board* board) {
     while (true) {
         if (kbhit()) {
             char ch = getchar();
             SnakeNode* head = snake->get_head();
             int head_y_pos = head->get_y_index();
             int head_x_pos = head->get_x_index();
-            char incoming_cell;
             
-            // TODO: Too much duplicated logic. Should encapsulate in function.
             switch (ch) {
               case 'a':
-                incoming_cell = board->get_board()[head_y_pos][head_x_pos - 1];
-                if (incoming_cell == '#') {
-                  std::cout << "You collided with your own body! GAME OVER." << "\n";
-                  setNonCanonicalMode(false);
-                  std::exit(0);
-                }
-
+                assess_incoming_cell(board, head_y_pos, head_x_pos - 1);
                 snake->move(head_y_pos, head_x_pos - 1, board);
                 return 0;
               case 'd':
-                incoming_cell = board->get_board()[head_y_pos][head_x_pos + 1];
-                if (incoming_cell == '#') {
-                  std::cout << "You collided with your own body! GAME OVER." << "\n";
-                  setNonCanonicalMode(false);
-                  std::exit(0);
-                }
-
+                assess_incoming_cell(board, head_y_pos, head_x_pos + 1);
                 snake->move(head_y_pos, head_x_pos + 1, board);
                 return 0;
               case 'w':
-                incoming_cell = board->get_board()[head_y_pos - 1][head_x_pos];
-                if (incoming_cell == '#') {
-                  std::cout << "You collided with your own body! GAME OVER." << "\n";
-                  setNonCanonicalMode(false);
-                  std::exit(0);
-                }
+                assess_incoming_cell(board, head_y_pos - 1, head_x_pos);
                 snake->move(head_y_pos - 1, head_x_pos, board);
                 return 0;
               case 's':
-                incoming_cell = board->get_board()[head_y_pos + 1][head_x_pos];
-                if (incoming_cell == '#') {
-                  std::cout << "You collided with your own body! GAME OVER." << "\n";
-                  setNonCanonicalMode(false);
-                  std::exit(0);
-                }
+                assess_incoming_cell(board, head_y_pos + 1, head_x_pos);
                 snake->move(head_y_pos + 1, head_x_pos, board);
                 return 0;
               default:
@@ -106,6 +92,7 @@ int start_game_runtime(Snake* snake, Board* board) {
 
 int main() {
     setNonCanonicalMode(true);
+    const int INITIAL_SNAKE_SIZE = 5;
 
     Board board {20, 60};
     Snake snake;
@@ -117,12 +104,12 @@ int main() {
     p_snake->spawn(18, 30, p_board);
     
     // Build the initial snake.
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < INITIAL_SNAKE_SIZE; i++) {
       p_snake->append(p_board);
     } 
 
     while (true) {
-      start_game_runtime(p_snake, p_board);
+      run_session(p_snake, p_board);
     } 
     
     setNonCanonicalMode(false);
