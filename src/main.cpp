@@ -47,6 +47,7 @@ int kbhit() {
     return 0;
 }
 
+// TODO: This should also handle eating a fruit when incoming_cell is a fruit.
 void assess_incoming_cell(Board* board, int y, int x) {
   char incoming_cell = board->get_board()[y][x];
   if (incoming_cell == '#') {
