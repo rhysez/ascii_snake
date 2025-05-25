@@ -46,4 +46,5 @@ void Board::update_frame() const {
   
   std::cout << "\n";
   std::cout << "Score: " << std::to_string(m_score) << "\n";
+  std::cout << "Press x to exit the game." << "\n";
 }

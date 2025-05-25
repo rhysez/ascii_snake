@@ -102,7 +102,6 @@ void Snake::move(int new_y_pos, int new_x_pos, Board* board) {
   // Update the frame for the head node.
   board->insert_at(new_y_pos, new_x_pos);
   board->delete_at(prev_y, prev_x);
-  board->update_frame();
 
   // Move to next node.
   current = current->next;
@@ -120,7 +119,6 @@ void Snake::move(int new_y_pos, int new_x_pos, Board* board) {
 
     board->insert_at(prev_y, prev_x);
     board->delete_at(curr_y, curr_x);
-    board->update_frame();
 
     // Update prev position for the next node to use.
     prev_y = curr_y;
@@ -128,4 +126,6 @@ void Snake::move(int new_y_pos, int new_x_pos, Board* board) {
 
     current = current->next;
   }
+
+  board->update_frame();
 }

@@ -48,7 +48,7 @@ int kbhit() {
 }
 
 // TODO: This should also handle eating a fruit when incoming_cell is a fruit.
-int assess_incoming_cell(Board* board, int y, int x) {
+int assess_incoming_cell(Board* board, Snake* snake, int y, int x) {
   if (y < 0 || y >= board->get_height() || x < 0 || x >= board->get_width()) {
     return 1;
   }
@@ -63,6 +63,8 @@ int assess_incoming_cell(Board* board, int y, int x) {
 
   if (incoming_cell == 'O') {
     board->increment_score();
+    board->spawn_fruit();
+    snake->append(board);
   }
   return 0;
 }
@@ -80,29 +82,32 @@ int run_session(Snake* snake, Board* board) {
             
             switch (ch) {
               case 'a':
-                result = assess_incoming_cell(board, head_y_pos, head_x_pos - 1);
+                result = assess_incoming_cell(board, snake, head_y_pos, head_x_pos - 1);
                 if (result == 0) {
                   snake->move(head_y_pos, head_x_pos - 1, board);
                 }
                 return 0;
               case 'd':
-                result = assess_incoming_cell(board, head_y_pos, head_x_pos + 1);
+                result = assess_incoming_cell(board, snake, head_y_pos, head_x_pos + 1);
                 if (result == 0) {
                   snake->move(head_y_pos, head_x_pos + 1, board);
                 }
                 return 0;
               case 'w':
-                result = assess_incoming_cell(board, head_y_pos - 1, head_x_pos);
+                result = assess_incoming_cell(board, snake, head_y_pos - 1, head_x_pos);
                 if (result == 0) {
                   snake->move(head_y_pos - 1, head_x_pos, board);
                 } 
                 return 0;
               case 's':
-                result = assess_incoming_cell(board, head_y_pos + 1, head_x_pos);
+                result = assess_incoming_cell(board, snake, head_y_pos + 1, head_x_pos);
                 if (result == 0) {
                   snake->move(head_y_pos + 1, head_x_pos, board);
                 }
                 return 0;
+              case 'x':
+                setNonCanonicalMode(false);
+                std::exit(0);
               default:
                 std::cout << "No binding available for this key" << "\n";
                 return 1;
@@ -115,15 +120,17 @@ int main() {
     setNonCanonicalMode(true);
     const int INITIAL_SNAKE_SIZE = 5;
 
-    Board board {20, 60};
+    Board board {16, 46};
     Snake snake;
 
     // Pointers to the board and snake.
     Board* p_board = &board;
     Snake* p_snake = &snake;
 
-    p_snake->spawn(18, 30, p_board);
-    p_board->spawn_fruit();
+    int spawn_y = p_board->get_board().size() / 2;
+    int spawn_x = p_board->get_board()[0].size() / 2;
+
+    p_snake->spawn(spawn_y, spawn_x, p_board);
     p_board->spawn_fruit();
     
     // Build the initial snake.
