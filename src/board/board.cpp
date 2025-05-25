@@ -39,12 +39,19 @@ void Board::update_frame() const {
   
   for (const auto& row : m_board) {
     for (const auto& cell : row) {
-      std::cout << cell; 
+      if (cell == '#') {
+        std::cout << "\033[36m" << cell << "\033[0m";
+      } else if (cell == 'O') {
+        std::cout << "\033[35m" << cell << "\033[0m";
+      } else {
+        std::cout << "\033[32m" << cell << "\033[0m";
+      }
     }
     std::cout << "\n";
   }
   
   std::cout << "\n";
   std::cout << "Score: " << std::to_string(m_score) << "\n";
+  std::cout << "Use keys W, A, S, D to move the snake." << "\n";
   std::cout << "Press x to exit the game." << "\n";
 }

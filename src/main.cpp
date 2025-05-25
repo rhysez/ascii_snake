@@ -47,7 +47,6 @@ int kbhit() {
     return 0;
 }
 
-// TODO: This should also handle eating a fruit when incoming_cell is a fruit.
 int assess_incoming_cell(Board* board, Snake* snake, int y, int x) {
   if (y < 0 || y >= board->get_height() || x < 0 || x >= board->get_width()) {
     return 1;
@@ -57,6 +56,10 @@ int assess_incoming_cell(Board* board, Snake* snake, int y, int x) {
   if (incoming_cell == '#') {
     std::cout << "You collided with your own body! GAME OVER." << "\n";
     setNonCanonicalMode(false);
+
+    delete board;
+    delete snake;
+
     std::exit(0);
     return 2;
   }
