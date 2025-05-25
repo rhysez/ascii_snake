@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <random>
 
 // Represents the game board.
 // m_board is initialised with a 2D vector of chars.
@@ -19,6 +20,17 @@ void Board::insert_at(int y, int x) {
 
 void Board::delete_at(int y, int x) {
   m_board[y][x] = '~';
+}
+
+void Board::spawn_fruit() {
+  std::random_device rand;
+  std::mt19937 gen(rand());
+  
+  // Generate random ints for board rows and board cols.
+  std::uniform_int_distribution<> y_distr(0, m_board.size() - 1);
+  std::uniform_int_distribution<> x_distr(0, m_board[0].size() - 1);
+
+  m_board[y_distr(gen)][x_distr(gen)] = 'O';
 }
 
 // Renders the board with latest snake position.

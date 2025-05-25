@@ -38,6 +38,7 @@ class Board {
 
     void insert_at(int y, int x);
     void delete_at(int y, int x);
+    void spawn_fruit();
 
     std::vector<std::vector<char>> get_board() const {
       return m_board;

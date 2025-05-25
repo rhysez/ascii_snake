@@ -60,6 +60,10 @@ int assess_incoming_cell(Board* board, int y, int x) {
     std::exit(0);
     return 2;
   }
+
+  if (incoming_cell == 'O') {
+    board->increment_score();
+  }
   return 0;
 }
 
@@ -119,6 +123,8 @@ int main() {
     Snake* p_snake = &snake;
 
     p_snake->spawn(18, 30, p_board);
+    p_board->spawn_fruit();
+    p_board->spawn_fruit();
     
     // Build the initial snake.
     for (int i = 0; i < INITIAL_SNAKE_SIZE; i++) {
