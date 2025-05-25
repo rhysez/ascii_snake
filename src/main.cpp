@@ -54,15 +54,28 @@ int main() {
     Snake snake;
 
     // Pointer to the board.
-    // Allows Snake methods to access Board from within members.
+    // Allows Snake methods to access Board.
     Board* p_board = &board;
 
     snake.spawn(18, 30, p_board);
+    
+    // Build the initial snake.
+    for (int i = 0; i < 5; i++) {
+      snake.append(p_board);
+    } 
 
     while (true) {
         if (kbhit()) {
             char ch = getchar();
-            snake.append(p_board);
+            SnakeNode* head = snake.get_head();
+            int head_y_pos = head->get_y_index();
+            int head_x_pos = head->get_x_index();
+
+            snake.move(
+                head_y_pos,
+                head_x_pos - 1,
+                p_board
+                );
         }
     }
 

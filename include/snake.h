@@ -14,6 +14,7 @@
 // The nodes of the snake are ordered from head to tail.
 // I.E the 'next' node will move towards the tail,
 // And the 'prev' node will move back towards the head.
+
 class Snake {
   private:
     SnakeNode* m_head;
@@ -24,6 +25,7 @@ class Snake {
     
     void spawn(int y_pos, int x_pos, Board* board);
     void append(Board* board); 
+    void move(int new_y_pos, int new_x_pos, Board* board);
 
     SnakeNode* get_head() const {
       return m_head;

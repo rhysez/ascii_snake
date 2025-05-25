@@ -56,13 +56,77 @@ void Snake::append(Board* board) {
     SnakeNode* new_node = new SnakeNode(y_pos, x_pos);
 
     if (!m_head) {
+      // If there's no head, assign the head and tail to both be the new node.
+      // Set head's previous node to be nullptr - it doesn't exist.
         m_head = m_tail = new_node;
+        m_head->prev = nullptr;
     } else {
+      // Go directly to the tail and set the next node to be the new node.
+      // Then, set the prev node of the new node to be the tail.
+      // Then, re-assign the tail to the new node.
+      // Finally, set tail's next node to be nullptr - it doesn't exist.
         m_tail->next = new_node;
         new_node->prev = m_tail;
         m_tail = new_node;
+        m_tail->next = nullptr;
     }
     
     board->insert_at(y_pos, x_pos);
     board->update_frame();
+}
+
+// Moving the snake - pseudocode:
+// For each node, 
+// Set prev co-ordinates to the current co-ordinates,
+// Then, set current co-cordinates to the new co-ordinates.
+// Then, insert '#' at node's new co-ordinates.
+// Finally, insert '~' at node's previous co-ordinates.
+// ^ This ensures the snake doesn't leave behind stray '#' chars.
+
+// Moves the snake towards the targeted position on the board.
+// Recursively moves each individual node in the list.
+//  BUG: Moving snake deletes all previous nodes to the head.
+void Snake::move(int new_y_pos, int new_x_pos, Board* board) {
+  SnakeNode* current = m_head;
+
+  // Capture the node's old position.
+  int prev_y = current->get_y_index();
+  int prev_x = current->get_x_index();
+
+  // Set previous position to the old position.
+  // Set current position to the new position.
+  current->set_prev_y_index(prev_y);
+  current->set_prev_x_index(prev_x);
+  current->set_y_index(new_y_pos);
+  current->set_x_index(new_x_pos);
+
+  // Update the frame for the head node.
+  board->insert_at(new_y_pos, new_x_pos);
+  board->delete_at(prev_y, prev_x);
+  board->update_frame();
+
+  // Move to next node.
+  current = current->next;
+
+  while (current) {
+    int curr_y = current->get_y_index();
+    int curr_x = current->get_x_index();
+
+    current->set_prev_y_index(curr_y);
+    current->set_prev_x_index(curr_x);
+
+    // Move this node to the previous node's old position.
+    current->set_y_index(prev_y);
+    current->set_x_index(prev_x);
+
+    board->insert_at(prev_y, prev_x);
+    board->delete_at(curr_y, curr_x);
+    board->update_frame();
+
+    // Update prev position for the next node to use.
+    prev_y = curr_y;
+    prev_x = curr_x;
+
+    current = current->next;
+  }
 }

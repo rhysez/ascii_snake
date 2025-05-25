@@ -4,8 +4,8 @@
 
 class SnakeNode {
   private:
-    int m_prev_node_y_index;
-    int m_prev_node_x_index;
+    int m_prev_y_index;
+    int m_prev_x_index;
 
     int m_y_index;
     int m_x_index;
@@ -24,6 +24,30 @@ class SnakeNode {
       prev = node;
     }
 
+    void set_prev_y_index(int y_pos) {
+      m_prev_y_index = y_pos;
+    }
+    
+    void set_prev_x_index(int x_pos) {
+      m_prev_x_index = x_pos;
+    }
+
+    void set_y_index(int y_pos) {
+      m_y_index = y_pos;
+    }
+
+    void set_x_index(int x_pos) {
+      m_x_index = x_pos;
+    }
+
+    int get_prev_y_index() const {
+      return m_prev_y_index;
+    }
+
+    int get_prev_x_index() const {
+      return m_prev_x_index;
+    }
+
     int get_y_index() const {
       return m_y_index;
     }
@@ -31,8 +55,6 @@ class SnakeNode {
     int get_x_index() const {
       return m_x_index;
     }
-
-    void move();
 };
 
 #endif
